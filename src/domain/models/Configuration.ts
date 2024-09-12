@@ -1,5 +1,8 @@
-import { Flavor } from './Flavor.js';
+type Flavors = 'retail';
 
-export class Configuration {
-  constructor(public flavors: Flavor[]) {}
-}
+export type Configuration = {
+  key: string;
+  flavors: {
+    [key in Flavors]?: string;
+  };
+};
