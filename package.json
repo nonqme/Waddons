@@ -34,7 +34,8 @@
   "lint-staged": {
     "*.ts": [
       "eslint",
-      "prettier --write"
+      "prettier --write",
+      "tsc --noEmit"
     ]
   },
   "engines": {
