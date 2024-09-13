@@ -1,7 +1,11 @@
 export const ERROR_MESSAGES = {
-  configurationAlreadyExists: 'Configuration already exists',
-  apiKeyIsRequired: 'API key is required',
-  atLeastOnePathIsRequired: 'At least one path is required',
-  invalidPathKeys: 'Path keys must be "retail" or "classic"',
-  errorCreatingConfiguration: 'Error creating configuration',
+  configurationAlreadyExists: 'Configuration already exists.',
+  apiKeyIsMissing: 'apiKey is missing.',
+  apiKeyIsNotAString: 'apiKey should be a string.',
+  pathsIsMissing: 'paths is missing.',
+  pathsIsNotAnObject: 'paths should be an object.',
+  pathValueIsNotAString: 'Path value should be a string.',
+  atLeastOnePathIsRequired: 'At least one path is required.',
+  invalidPathKey: 'Invalid path key.',
+  errorCreatingConfiguration: 'Error creating configuration.',
 };

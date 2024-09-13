@@ -15,7 +15,7 @@ describe('CreateConfiguration', () => {
   beforeEach(() => {
     FakeConfigurationRepository = {
       create: async (configuration) => configuration,
-      exists: async () => false,
+      exist: async () => false,
     };
     createConfiguration = new CreateConfiguration(FakeConfigurationRepository);
   });
@@ -29,7 +29,7 @@ describe('CreateConfiguration', () => {
   };
 
   it('should throw an error if a configuration already exists', async () => {
-    FakeConfigurationRepository.exists = async () => true;
+    FakeConfigurationRepository.exist = async () => true;
     createConfiguration = new CreateConfiguration(FakeConfigurationRepository);
 
     await assert.rejects(
@@ -38,7 +38,7 @@ describe('CreateConfiguration', () => {
     );
   });
 
-  it('should throw an error if the API key is missing', async () => {
+  it('should throw an error if the API key property is missing', async () => {
     const invalidConfig = {
       paths: {
         retail: 'path/to/retail',
@@ -46,12 +46,21 @@ describe('CreateConfiguration', () => {
       },
     } as Configuration;
 
-    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.apiKeyIsRequired));
+    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.apiKeyIsMissing));
+  });
+
+  it('should throw an error if the paths property is missing', async () => {
+    const invalidConfig = {
+      apiKey: 'api-key',
+    } as Configuration;
+
+    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathsIsMissing));
   });
 
   it('should throw an error if no paths are provided', async () => {
     const invalidConfig = {
       apiKey: 'api-key',
+      paths: {},
     } as Configuration;
 
     await assert.rejects(
@@ -68,7 +77,7 @@ describe('CreateConfiguration', () => {
       } as Record<string, string>,
     } as Configuration;
 
-    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.invalidPathKeys));
+    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.invalidPathKey));
   });
 
   it('should throw an error if the repository fails to create the configuration', async () => {
@@ -81,6 +90,36 @@ describe('CreateConfiguration', () => {
       createConfiguration.execute(validConfig),
       new Error(ERROR_MESSAGES.errorCreatingConfiguration)
     );
+  });
+
+  it('should throw an error if the API key is not a string', async () => {
+    const invalidConfig = {
+      apiKey: 123 as unknown as string,
+      paths: {
+        retail: 'path/to/retail',
+        classic: 'path/to/classic',
+      },
+    } as Configuration;
+
+    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.apiKeyIsNotAString));
+  });
+
+  it('should throw an error if the paths property is not an object', async () => {
+    const invalidConfig = {
+      apiKey: 'api-key',
+      paths: 'invalid' as unknown as Record<string, string>,
+    } as Configuration;
+
+    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathsIsNotAnObject));
+  });
+
+  it('should throw an error if the paths property is an array', async () => {
+    const invalidConfig = {
+      apiKey: 'api-key',
+      paths: [] as unknown as Record<string, string>,
+    } as Configuration;
+
+    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathsIsNotAnObject));
   });
 
   it('should return the configuration', async () => {
