@@ -2,9 +2,8 @@ import { describe, it, beforeEach } from 'node:test';
 
 import assert from 'node:assert';
 
-import { CreateConfiguration } from './CreateConfiguration.js';
+import { CreateConfiguration, CreateConfigurationDTO } from './CreateConfiguration.js';
 import type { IConfigurationRepository } from '../domain/repositories/ConfigurationRepository.js';
-import type { Configuration } from '../domain/models/Configuration.js';
 
 import { ERROR_MESSAGES } from '../errors.js';
 
@@ -20,7 +19,7 @@ describe('CreateConfiguration', () => {
     createConfiguration = new CreateConfiguration(FakeConfigurationRepository);
   });
 
-  const validConfig: Configuration = {
+  const validConfig: CreateConfigurationDTO = {
     apiKey: 'api-key',
     paths: {
       retail: 'path/to/retail',
@@ -44,7 +43,7 @@ describe('CreateConfiguration', () => {
         retail: 'path/to/retail',
         classic: 'path/to/classic',
       },
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.apiKeyIsMissing));
   });
@@ -52,7 +51,7 @@ describe('CreateConfiguration', () => {
   it('should throw an error if the paths property is missing', async () => {
     const invalidConfig = {
       apiKey: 'api-key',
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathsIsMissing));
   });
@@ -61,7 +60,7 @@ describe('CreateConfiguration', () => {
     const invalidConfig = {
       apiKey: 'api-key',
       paths: {},
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(
       createConfiguration.execute(invalidConfig),
@@ -75,7 +74,7 @@ describe('CreateConfiguration', () => {
       paths: {
         invalid: 'path/to/invalid',
       } as Record<string, string>,
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.invalidPathKey));
   });
@@ -99,7 +98,7 @@ describe('CreateConfiguration', () => {
         retail: 'path/to/retail',
         classic: 'path/to/classic',
       },
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.apiKeyIsNotAString));
   });
@@ -108,7 +107,7 @@ describe('CreateConfiguration', () => {
     const invalidConfig = {
       apiKey: 'api-key',
       paths: 'invalid' as unknown as Record<string, string>,
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathsIsNotAnObject));
   });
@@ -117,7 +116,7 @@ describe('CreateConfiguration', () => {
     const invalidConfig = {
       apiKey: 'api-key',
       paths: [] as unknown as Record<string, string>,
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathsIsNotAnObject));
   });
@@ -129,7 +128,7 @@ describe('CreateConfiguration', () => {
         retail: 'path/to/retail',
         classic: 123 as unknown as string,
       },
-    } as Configuration;
+    } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathValueIsNotAString));
   });
@@ -137,6 +136,8 @@ describe('CreateConfiguration', () => {
   it('should return the configuration', async () => {
     const configuration = await createConfiguration.execute(validConfig);
 
-    assert.deepStrictEqual(configuration, validConfig);
+    assert.ok(configuration);
+    assert.deepStrictEqual(configuration.apiKey, validConfig.apiKey);
+    assert.deepStrictEqual(configuration.paths, validConfig.paths);
   });
 });
