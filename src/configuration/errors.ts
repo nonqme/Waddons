@@ -1,5 +1,6 @@
 export const ERROR_MESSAGES = {
   configurationAlreadyExists: 'Configuration already exists.',
+  configurationDoesNotExist: 'Configuration does not exist.',
   apiKeyIsMissing: 'apiKey is missing.',
   apiKeyIsNotAString: 'apiKey should be a string.',
   pathsIsMissing: 'paths is missing.',

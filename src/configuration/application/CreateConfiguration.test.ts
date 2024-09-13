@@ -15,7 +15,7 @@ describe('CreateConfiguration', () => {
     FakeConfigurationRepository = {
       create: async (configuration) => configuration,
       exist: async () => false,
-    };
+    } as IConfigurationRepository;
     createConfiguration = new CreateConfiguration(FakeConfigurationRepository);
   });
 
