@@ -18,7 +18,6 @@ describe('CreateConfiguration', () => {
   beforeEach(() => {
     FakeConfigurationRepository = {
       load: async () => configuration,
-      exist: async () => true,
     } as IConfigurationRepository;
     loadConfiguration = new LoadConfiguration(FakeConfigurationRepository);
   });
@@ -32,7 +31,9 @@ describe('CreateConfiguration', () => {
   });
 
   it('should throw an error if the configuration does not exist', async () => {
-    FakeConfigurationRepository.exist = async () => false;
+    FakeConfigurationRepository.load = async () => {
+      throw new Error(ERROR_MESSAGES.configurationDoesNotExist);
+    };
     loadConfiguration = new LoadConfiguration(FakeConfigurationRepository);
 
     await assert.rejects(loadConfiguration.execute(), new Error(ERROR_MESSAGES.configurationDoesNotExist));

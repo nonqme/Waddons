@@ -14,7 +14,6 @@ describe('CreateConfiguration', () => {
   beforeEach(() => {
     FakeConfigurationRepository = {
       create: async (configuration) => configuration,
-      exist: async () => false,
     } as IConfigurationRepository;
     createConfiguration = new CreateConfiguration(FakeConfigurationRepository);
   });
@@ -28,7 +27,9 @@ describe('CreateConfiguration', () => {
   };
 
   it('should throw an error if a configuration already exists', async () => {
-    FakeConfigurationRepository.exist = async () => true;
+    FakeConfigurationRepository.create = async () => {
+      throw new Error(ERROR_MESSAGES.configurationAlreadyExists);
+    };
     createConfiguration = new CreateConfiguration(FakeConfigurationRepository);
 
     await assert.rejects(
@@ -77,18 +78,6 @@ describe('CreateConfiguration', () => {
     } as CreateConfigurationDTO;
 
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.invalidPathKey));
-  });
-
-  it('should throw an error if the repository fails to create the configuration', async () => {
-    FakeConfigurationRepository.create = () => {
-      throw new Error();
-    };
-    createConfiguration = new CreateConfiguration(FakeConfigurationRepository);
-
-    await assert.rejects(
-      createConfiguration.execute(validConfig),
-      new Error(ERROR_MESSAGES.errorCreatingConfiguration)
-    );
   });
 
   it('should throw an error if the API key is not a string', async () => {

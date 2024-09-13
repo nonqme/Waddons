@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --import ./ts-node.mjs src/index.ts",
     "start": "node dist/index.js",
+    "type-check": "tsc --noEmit",
     "build": "tsc",
     "lint": "eslint",
     "format": "prettier --write .",
@@ -34,8 +35,7 @@
   "lint-staged": {
     "*.ts": [
       "eslint",
-      "prettier --write",
-      "tsc --noEmit"
+      "prettier --write"
     ]
   },
   "engines": {
