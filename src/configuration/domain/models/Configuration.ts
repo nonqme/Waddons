@@ -1,8 +1,5 @@
-import type { Flavor } from './Flavor.js';
-
-export interface Configuration {
+import type { Paths } from './Path.js';
+export type Configuration = {
   apiKey: string;
-  paths: {
-    [key in Flavor]: string;
-  };
-}
+  paths: Paths;
+};

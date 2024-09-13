@@ -122,6 +122,18 @@ describe('CreateConfiguration', () => {
     await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathsIsNotAnObject));
   });
 
+  it('should throw an error if the path value is not a string', async () => {
+    const invalidConfig = {
+      apiKey: 'api-key',
+      paths: {
+        retail: 'path/to/retail',
+        classic: 123 as unknown as string,
+      },
+    } as Configuration;
+
+    await assert.rejects(createConfiguration.execute(invalidConfig), new Error(ERROR_MESSAGES.pathValueIsNotAString));
+  });
+
   it('should return the configuration', async () => {
     const configuration = await createConfiguration.execute(validConfig);
 
