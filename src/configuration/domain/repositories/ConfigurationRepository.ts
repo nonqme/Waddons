@@ -1,5 +1,6 @@
 import { Configuration } from '../models/Configuration.js';
 
 export interface IConfigurationRepository {
-  save(configuration: Configuration): Promise<void>;
+  create(configuration: Configuration): Promise<Configuration>;
+  exists(): Promise<boolean>;
 }

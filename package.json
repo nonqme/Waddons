@@ -10,7 +10,7 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "prepare": "husky",
-    "test": "node --test --import ./ts-node.mjs tests/**/*.ts"
+    "test": "node --test --import ./ts-node.mjs src/**/*.test.ts"
   },
   "author": "",
   "license": "ISC",
