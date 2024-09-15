@@ -3,6 +3,7 @@ export const ERROR_MESSAGES = {
   API_KEY_MUST_BE_A_STRING: 'apiKey must be a string',
 
   FLAVORS_IS_REQUIRED: 'flavors is required',
+  FLAVOR_IS_INVALID: 'flavor is invalid',
   FLAVORS_MUST_BE_AN_ARRAY: 'flavors must be an array',
   FLAVORS_SHOULD_HAVE_AT_LEAST_ONE_FLAVOR: 'flavors should have at least one flavor',
   FLAVORS_MUST_BE_AN_ARRAY_OF_FLAVOR_INSTANCES: 'flavors must be an array of Flavor instances',

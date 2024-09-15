@@ -4,12 +4,13 @@ import assert from 'node:assert';
 import { Configuration } from './Configuration.js';
 import { Flavor } from './Flavor.js';
 import { ERROR_MESSAGES } from '../../errors.js';
+import { AVAILABLE_FLAVORS } from '../../config.js';
 
 describe('Configuraiton Entity', () => {
   const apiKey = 'apiKey';
 
   it('should create a configuration entity', () => {
-    const flavor = new Flavor('flavor', 'path');
+    const flavor = new Flavor(AVAILABLE_FLAVORS[0], 'path');
     const configuration = new Configuration(apiKey, [flavor]);
     assert.strictEqual(configuration.apiKey, apiKey);
     assert.strictEqual(configuration.flavors.length, 1);

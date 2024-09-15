@@ -3,9 +3,10 @@ import assert from 'node:assert';
 
 import { Flavor } from './Flavor.js';
 import { ERROR_MESSAGES } from '../../errors.js';
+import { AVAILABLE_FLAVORS } from '../../config.js';
 
 describe('Flavor Entity', () => {
-  const name = 'name';
+  const name = AVAILABLE_FLAVORS[0];
   const path = 'path';
 
   it('should create a flavor entity', () => {
@@ -23,6 +24,12 @@ describe('Flavor Entity', () => {
   it('should throw an error if name is not a string', () => {
     assert.throws(() => new Flavor(1 as never, path), {
       message: ERROR_MESSAGES.NAME_MUST_BE_A_STRING,
+    });
+  });
+
+  it('should throw an error if name is not a valid flavor', () => {
+    assert.throws(() => new Flavor('invalid', path), {
+      message: ERROR_MESSAGES.FLAVOR_IS_INVALID,
     });
   });
 
