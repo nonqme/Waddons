@@ -26,7 +26,7 @@ export class Flavor {
       throw new Error(ERROR_MESSAGES.NAME_MUST_BE_A_STRING);
     }
     if (!AVAILABLE_FLAVORS.includes(name)) {
-      throw new Error(ERROR_MESSAGES.FLAVOR_IS_INVALID);
+      throw new Error(ERROR_MESSAGES.NAME_IS_INVALID);
     }
   }
   #validatePath(path: string): void {

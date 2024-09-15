@@ -29,7 +29,7 @@ describe('Flavor Entity', () => {
 
   it('should throw an error if name is not a valid flavor', () => {
     assert.throws(() => new Flavor('invalid', path), {
-      message: ERROR_MESSAGES.FLAVOR_IS_INVALID,
+      message: ERROR_MESSAGES.NAME_IS_INVALID,
     });
   });
 
