@@ -14,13 +14,4 @@ export class JsonConfigurationRepository implements IConfigurationRepository {
     await this.#fileSystem.writeFile(this.#path, JSON.stringify(configuration));
     return configuration;
   }
-
-  async exists(): Promise<boolean> {
-    try {
-      await this.#fileSystem.access(this.#path);
-      return true;
-    } catch {
-      return false;
-    }
-  }
 }
