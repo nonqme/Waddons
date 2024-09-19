@@ -14,4 +14,9 @@ export class JsonConfigurationRepository implements IConfigurationRepository {
     await this.#fileSystem.writeFile(this.#path, JSON.stringify(configuration));
     return configuration;
   }
+
+  async load(): Promise<Configuration> {
+    const data = await this.#fileSystem.readFile(this.#path, 'utf-8');
+    return JSON.parse(data);
+  }
 }
