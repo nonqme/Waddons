@@ -16,7 +16,7 @@ export class InstallWoWAddon {
     this.#extract = extract;
   }
   async execute(id: number, path: string): Promise<void> {
-    const exists = await this.#repository.exists(id, path);
+    const exists = await this.#repository.addonExists(id, path);
     if (exists) {
       throw new Error('Addon already exists');
     }
