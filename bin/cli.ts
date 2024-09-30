@@ -3,6 +3,7 @@
 import sade from 'sade';
 
 import { install } from '../src/commands/install.js';
+import { uninstall } from '../src/commands/uninstall.js';
 
 const prog = sade('waddons');
 
@@ -16,6 +17,13 @@ prog
   .example('install 123456 --path /path/to/addons')
   .action(async (id, opts) => {
     await install(parseInt(id), opts.path);
+  });
+
+prog
+  .command('uninstall')
+  .describe('uninstall a World of Warcraft addon')
+  .action(async () => {
+    await uninstall();
   });
 
 prog.parse(process.argv);

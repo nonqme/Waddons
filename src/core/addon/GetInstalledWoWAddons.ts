@@ -1,5 +1,5 @@
-import type { IWoWAddonRepository } from './models/IWoWAddonRepository';
-import type { WoWAddon } from './models/WoWAddon';
+import type { IWoWAddonRepository } from './models/IWoWAddonRepository.js';
+import type { WoWAddon } from './models/WoWAddon.js';
 
 export class GetInstalledWoWAddons {
   #repository: IWoWAddonRepository;
