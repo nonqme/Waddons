@@ -16,6 +16,10 @@ export class InstallWoWAddon {
     this.#extract = extract;
   }
   async execute(id: number, path: string): Promise<void> {
+    const exists = await this.#repository.exists(id, path);
+    if (exists) {
+      throw new Error('Addon already exists');
+    }
     const addon = await this.#api.fetchAddon(id);
     const buffer = await this.#download(addon.downloadUrl!);
     this.#extract(buffer, path);

@@ -25,4 +25,17 @@ export class WoWAddonRepository implements IWoWAddonRepository {
       await this.#fs.writeFile(installedAddonsPath, JSON.stringify([addon], null, 2));
     }
   }
+  async exists(id: number, path: string): Promise<boolean> {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = Path.dirname(__filename);
+    const installedAddonsPath = Path.join(__dirname, '..', '..', '..', '..', '..', 'configs', 'addons.json');
+
+    try {
+      const installedAddons = await this.#fs.readFile(installedAddonsPath, 'utf-8');
+      const addons = JSON.parse(installedAddons);
+      return addons.some((addon: WoWAddon) => addon.id === id && addon.path === path);
+    } catch {
+      return false;
+    }
+  }
 }
