@@ -17,8 +17,9 @@ export class InstallWoWAddon {
   }
   async execute(id: number, path: string): Promise<void> {
     const addon = await this.#api.fetchAddon(id);
-    const buffer = await this.#download(addon.downloadUrl);
+    const buffer = await this.#download(addon.downloadUrl!);
     this.#extract(buffer, path);
-    await this.#repository.saveAddon(addon);
+    delete addon.downloadUrl;
+    await this.#repository.saveAddon({ ...addon, path });
   }
 }

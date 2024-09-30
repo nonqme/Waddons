@@ -16,16 +16,11 @@ export default [
       'n/no-unpublished-import': [
         'error',
         {
-          allowModules: [
-            'globals',
-            '@eslint/js',
-            'eslint-plugin-n',
-            'typescript-eslint',
-            'eslint-config-prettier',
-          ],
+          allowModules: ['globals', '@eslint/js', 'eslint-plugin-n', 'typescript-eslint', 'eslint-config-prettier'],
         },
       ],
       'n/no-missing-import': ['off'],
+      'n/hashbang': ['off'],
     },
   },
 ];

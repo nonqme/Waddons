@@ -3,6 +3,6 @@ export interface WoWAddon {
   name: string;
   fileId: number;
   fileModules: string[];
-  downloadUrl: URL;
+  downloadUrl?: URL;
   path?: string;
 }

@@ -13,7 +13,8 @@ export class WoWAddonRepository implements IWoWAddonRepository {
   async saveAddon(addon: WoWAddon): Promise<void> {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = Path.dirname(__filename);
-    const installedAddonsPath = Path.join(__dirname, '..', 'configs', 'addons.json');
+    const installedAddonsPath = Path.join(__dirname, '..', '..', '..', '..', '..', 'configs', 'addons.json');
+    console.log(installedAddonsPath);
 
     try {
       const installedAddons = await this.#fs.readFile(installedAddonsPath, 'utf-8');
@@ -21,7 +22,7 @@ export class WoWAddonRepository implements IWoWAddonRepository {
       addons.push(addon);
       await this.#fs.writeFile(installedAddonsPath, JSON.stringify(addons, null, 2));
     } catch {
-      await this.#fs.mkdir(Path.join(__dirname, '..', 'configs'), { recursive: true });
+      await this.#fs.mkdir(Path.join(__dirname, '..', '..', '..', '..', '..', 'configs'), { recursive: true });
       await this.#fs.writeFile(installedAddonsPath, JSON.stringify([addon], null, 2));
     }
   }

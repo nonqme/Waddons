@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "waddons": "dist/bin/cli.js"
+  },
   "scripts": {
-    "dev": "node --import ./ts-node.mjs src/index.ts",
-    "start": "node dist/index.js",
+    "dev": "node --import ./ts-node.mjs bin/cli.ts",
+    "start": "tsc && node dist/bin/cli.js",
     "type-check": "tsc --noEmit",
     "build": "tsc",
     "lint": "eslint",
@@ -45,6 +48,7 @@
   "dependencies": {
     "@inquirer/prompts": "^6.0.1",
     "adm-zip": "^0.5.16",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "sade": "^1.8.1"
   }
 }
