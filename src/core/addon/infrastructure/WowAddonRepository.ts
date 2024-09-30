@@ -14,7 +14,6 @@ export class WoWAddonRepository implements IWoWAddonRepository {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = Path.dirname(__filename);
     const installedAddonsPath = Path.join(__dirname, '..', '..', '..', '..', '..', 'configs', 'addons.json');
-    console.log(installedAddonsPath);
 
     try {
       const installedAddons = await this.#fs.readFile(installedAddonsPath, 'utf-8');
