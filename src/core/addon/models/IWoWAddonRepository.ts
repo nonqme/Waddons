@@ -4,4 +4,5 @@ export interface IWoWAddonRepository {
   addonExists(id: number, path: string): Promise<boolean>;
   getAddonData(id: number, path: string): Promise<WoWAddon>;
   deleteAddon(id: number, path: string): Promise<void>;
+  getAddons(): Promise<WoWAddon[]>;
 }

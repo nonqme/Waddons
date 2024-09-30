@@ -46,6 +46,10 @@ export class WoWAddonRepository implements IWoWAddonRepository {
     await this.#fs.writeFile(this.#installedAddonsPath, JSON.stringify(newInstalledAddons, null, 2));
   }
 
+  async getAddons(): Promise<WoWAddon[]> {
+    return this.#readFile(this.#installedAddonsPath);
+  }
+
   #readFile = async (path: string): Promise<WoWAddon[]> => {
     const installedAddons = await this.#fs.readFile(path, 'utf-8');
     const addons = JSON.parse(installedAddons);
