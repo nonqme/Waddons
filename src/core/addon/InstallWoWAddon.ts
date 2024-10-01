@@ -20,10 +20,14 @@ export class InstallWoWAddon {
     if (exists) {
       throw new Error('Addon already exists');
     }
-    const addon = await this.#api.fetchAddon(id);
-    const buffer = await this.#download(addon.downloadUrl!);
-    this.#extract(buffer, path);
-    delete addon.downloadUrl;
-    await this.#repository.saveAddon({ ...addon, path });
+    try {
+      const addon = await this.#api.fetchAddon(id);
+      const buffer = await this.#download(addon.downloadUrl!);
+      this.#extract(buffer, path);
+      delete addon.downloadUrl;
+      await this.#repository.saveAddon({ ...addon, path });
+    } catch (error) {
+      throw new Error(`Failed to install addon: ${(error as Error).message}`);
+    }
   }
 }

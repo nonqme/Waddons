@@ -15,12 +15,16 @@ export class UninstallWoWAddon {
     if (!exists) {
       throw new Error('Addon does not exist');
     }
-    const addonData = await this.#repository.getAddonData(id, path);
-    for (const fileModule of addonData.fileModules) {
-      const filePath = Path.join(path, fileModule);
-      await this.#deleteFn(filePath);
-    }
+    try {
+      const addonData = await this.#repository.getAddonData(id, path);
+      for (const fileModule of addonData.fileModules) {
+        const filePath = Path.join(path, fileModule);
+        await this.#deleteFn(filePath);
+      }
 
-    await this.#repository.deleteAddon(id, path);
+      await this.#repository.deleteAddon(id, path);
+    } catch (error) {
+      throw new Error(`Failed to uninstall addon: ${(error as Error).message}`);
+    }
   }
 }
