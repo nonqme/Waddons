@@ -13,10 +13,17 @@ prog
   .command('install <id>')
   .describe('install a World of Warcraft addon by id')
   .option('-p, --path', 'path to install the addon')
+  .option('-k, --key', 'API key')
+  .option('-c, --config', 'path to a config file')
   .example('install 123456')
   .example('install 123456 --path /path/to/addons')
-  .action(async (id, opts) => {
-    await install(parseInt(id), opts.path);
+  .example('install 123456 -p /path/to/addons')
+  .example('install 123456 --key your-api-key')
+  .example('install 123456 -k your-api-key')
+  .example('install 123456 --config /path/to/config.json')
+  .example('install 123456 -c /path/to/config.json')
+  .action(async (id, options) => {
+    await install(parseInt(id), options);
   });
 
 prog
