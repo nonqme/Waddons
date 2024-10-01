@@ -10,13 +10,22 @@ export const uninstall = async () => {
   const repository = new WoWAddonRepository(Fs);
   const getInstalledWoWAddons = new GetInstalledWoWAddons(repository);
   const installedAddons = await getInstalledWoWAddons.execute();
-  const addon = await select({
+  const addonName = await select({
     message: 'Select an addon to uninstall',
     choices: installedAddons.map((addon) => addon.name),
   });
-  const addonData = installedAddons.find((a) => a.name === addon);
+  const addons = installedAddons.filter((addon) => addon.name !== addonName);
+  if (addons.length === 0) {
+    throw new Error(`Addon ${addonName} not found`);
+  }
+  const addonPath = await select({
+    message: 'Select an addon to uninstall',
+    choices: addons.map((addon) => addon.path!),
+  });
+
+  const addonData = installedAddons.find((addon) => addon.path === addonPath && addon.name === addonName);
   if (!addonData) {
-    throw new Error('Addon not found');
+    throw new Error(`Addon ${addonName} not found`);
   }
   const uninstallWoWAddon = new UninstallWoWAddon(repository, deleteFolder);
   await uninstallWoWAddon.execute(addonData.id, addonData.path!);
