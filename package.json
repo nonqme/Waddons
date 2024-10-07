@@ -46,7 +46,7 @@
     "node": ">=21.0.0"
   },
   "dependencies": {
-    "@inquirer/prompts": "^6.0.1",
+    "@inquirer/prompts": "^7.0.0",
     "adm-zip": "^0.5.16",
     "dotenv": "^16.4.5",
     "sade": "^1.8.1"
